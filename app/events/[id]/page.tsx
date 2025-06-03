@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Calendar, Clock, MapPin, Users } from "lucide-react"
 import { notFound } from "next/navigation";
 import EventRegistrationForm from "@/components/event-registration-form"
+import { format } from "date-fns"
+import { es } from "date-fns/locale"
 
 // Event type
 type Event = {
@@ -62,7 +64,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
               <div className="flex items-center">
                 <Calendar className="h-5 w-5 mr-2" />
-                {event.date}
+                {format(new Date(event.date), "d 'de' MMMM 'de' yyyy", { locale: es })}
               </div>
               <div className="flex items-center">
                 <Clock className="h-5 w-5 mr-2" />
@@ -74,7 +76,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
               </div>
               <div className="flex items-center">
                 <Users className="h-5 w-5 mr-2" />
-                Capacity: {event.capacity} people
+                Capacidad: {event.capacity} personas
               </div>
             </div>
           </div>
@@ -86,9 +88,9 @@ export default async function EventDetailPage({ params }: { params: { id: string
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold text-secondary-navy mb-6">About This Event</h2>
+              <h2 className="text-3xl font-bold text-secondary-navy mb-6">Sobre este evento</h2>
 
-              {event.presenter && <p className="text-primary-ruby font-medium mb-4">Presented by: {event.presenter}</p>}
+              {event.presenter && <p className="text-primary-ruby font-medium mb-4">Presentado por: {event.presenter}</p>}
 
               <div className="prose max-w-none text-muted-teal mb-8">
                 {event.longDescription?.split("\n\n").map((paragraph, index) => (
@@ -99,26 +101,26 @@ export default async function EventDetailPage({ params }: { params: { id: string
               </div>
 
               <div className="bg-alabaster p-6 rounded-lg mb-8">
-                <h3 className="text-xl font-bold text-secondary-navy mb-4">Event Details</h3>
+                <h3 className="text-xl font-bold text-secondary-navy mb-4">Detalles del evento</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-medium text-secondary-navy">Date & Time</h4>
+                    <h4 className="font-medium text-secondary-navy">Fecha y hora</h4>
                     <p className="text-muted-teal">
-                      {event.date}, {event.time}
+                      {format(new Date(event.date), "d 'de' MMMM 'de' yyyy", { locale: es })}, {event.time}
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-secondary-navy">Location</h4>
+                    <h4 className="font-medium text-secondary-navy">Lugar</h4>
                     <p className="text-muted-teal">El Parlamento - {event.location}</p>
                     <p className="text-muted-teal">123 Calle Principal, La Paz, Bolivia</p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-secondary-navy">Price</h4>
-                    <p className="text-muted-teal">{event.price || "Free"}</p>
+                    <h4 className="font-medium text-secondary-navy">Precio</h4>
+                    <p className="text-muted-teal">{event.price || "Gratis"}</p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-secondary-navy">Capacity</h4>
-                    <p className="text-muted-teal">{event.capacity} people</p>
+                    <h4 className="font-medium text-secondary-navy">Capacidad</h4>
+                    <p className="text-muted-teal">{event.capacity} personas</p>
                   </div>
                 </div>
               </div>
@@ -127,7 +129,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
             {/* Registration Form */}
             <div>
               <div className="bg-white shadow-md rounded-lg p-6 sticky top-24">
-                <h3 className="text-xl font-bold text-secondary-navy mb-6">Register for This Event</h3>
+                <h3 className="text-xl font-bold text-secondary-navy mb-6">Regístrate para este evento</h3>
                 <EventRegistrationForm eventId={event.id} eventTitle={event.title} />
               </div>
             </div>
@@ -138,7 +140,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
       {/* Related Events */}
       <section className="py-16 bg-alabaster">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold text-secondary-navy mb-8 text-center">You Might Also Be Interested In</h2>
+          <h2 className="text-3xl font-bold text-secondary-navy mb-8 text-center">También te puede interesar</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {events
               .filter((e) => e.id !== event.id && e.category === event.category)
@@ -156,10 +158,10 @@ export default async function EventDetailPage({ params }: { params: { id: string
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-secondary-navy mb-2">{relatedEvent.title}</h3>
                     <p className="text-sm text-muted-teal mb-4">
-                      {relatedEvent.date} • {relatedEvent.time}
+                      {format(new Date(relatedEvent.date), "d 'de' MMMM 'de' yyyy", { locale: es })} • {relatedEvent.time}
                     </p>
                     <Button asChild variant="outline" className="w-full">
-                      <Link href={`/events/${relatedEvent.id}`}>View Details</Link>
+                      <Link href={`/events/${relatedEvent.id}`}>Ver detalles</Link>
                     </Button>
                   </div>
                 </div>

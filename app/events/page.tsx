@@ -7,6 +7,8 @@ import { Calendar, Clock, MapPin, Users } from "lucide-react"
 import EventCalendar from "@/components/event-calendar-n"
 import { animate } from "@motionone/dom"
 import { useEffect, useRef, useState } from "react"
+import { format } from "date-fns"
+import { es } from "date-fns/locale"
 
 // Event type
 type Event = {
@@ -193,7 +195,7 @@ export default function EventsPage() {
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center text-sm text-muted-teal">
                         <Calendar className="h-4 w-4 mr-2 text-primary-ruby" />
-                        {event.date}
+                        {format(new Date(event.date), "d 'de' MMMM 'de' yyyy", { locale: es })}
                       </div>
                       <div className="flex items-center text-sm text-muted-teal">
                         <Clock className="h-4 w-4 mr-2 text-primary-ruby" />
