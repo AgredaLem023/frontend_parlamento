@@ -43,10 +43,17 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
     try {
-      // In a real application, you would send the data to your backend
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+      const response = await fetch(`${baseUrl}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) throw new Error("Error sending message")
 
       setIsSuccess(true)
       toast({
@@ -54,7 +61,6 @@ export default function ContactPage() {
         description: "Gracias por contactarnos. Nos pondremos en contacto contigo lo antes posible.",
       })
 
-      // Reset form
       setFormData({
         name: "",
         email: "",
