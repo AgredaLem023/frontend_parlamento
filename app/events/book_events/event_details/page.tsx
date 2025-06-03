@@ -75,11 +75,10 @@ export default function EventDetailsPage() {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
     
     try {
-      const response = await fetch(`${baseUrl}/api/book-event`, {
+      // Send to the backend to store (optional, if you want to keep the old logic)
+      await fetch(`${baseUrl}/api/book-event`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
           attendees: parseInt(values.attendees, 10),
@@ -88,12 +87,20 @@ export default function EventDetailsPage() {
           endTime,
         }),
       });
-      
-      if (!response.ok) {
-        throw new Error("Failed to book event");
-      }
-      
-      const data = await response.json();
+
+      // Send email to manager
+      await fetch(`${baseUrl}/api/book-event-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          attendees: parseInt(values.attendees, 10),
+          date: date?.toISOString(),
+          startTime,
+          endTime,
+        }),
+      });
+
       setIsLoading(false);
       
       // Show success message
