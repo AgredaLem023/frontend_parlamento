@@ -107,6 +107,16 @@ export default function EventsPage() {
     });
   }, []);
 
+  // Get today's date at midnight
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Filter for past events (date strictly before today)
+  const pastEvents = events.filter(event => {
+    const eventDate = new Date(event.date);
+    return eventDate < today;
+  });
+
   return (
     <div className="pt-24">
         {/* Host an Event */}
@@ -159,11 +169,11 @@ export default function EventsPage() {
           <h2 className="text-3xl font-bold text-secondary-navy mb-8 text-center">Eventos pasados</h2>
           {isLoading ? (
             <div className="text-center py-10">Loading events...</div>
-          ) : events.length === 0 ? (
-            <div className="text-center py-10">No events found</div>
+          ) : pastEvents.length === 0 ? (
+            <div className="text-center py-10">No past events found</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {events.map((event: Event) => (
+              {pastEvents.map((event: Event) => (
                 <Card key={event.id} className="overflow-hidden border-none shadow-md h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:scale-[1.05] hover:-translate-y-2 group">
                   <div className="relative h-48 overflow-hidden">
                     <Image 
