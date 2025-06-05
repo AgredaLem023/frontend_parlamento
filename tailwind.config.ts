@@ -69,8 +69,10 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        sans: ["Jost-Regular", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Junicode-CondMedium", "ui-serif", "Georgia", "serif"],
+        heading: ["Junicode-CondMedium", "ui-serif", "Georgia", "serif"],
+        body: ["Jost-Regular", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

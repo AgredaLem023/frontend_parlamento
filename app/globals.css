@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Font Definitions */
+@font-face {
+  font-family: 'Junicode-CondMedium';
+  src: url('/fonts/Junicode-CondMedium.woff2') format('woff2'),
+       url('/fonts/Junicode-CondMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost-Regular';
+  src: url('/fonts/Jost-Regular.woff2') format('woff2'),
+       url('/fonts/Jost-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     --background: 210 20% 98%;
@@ -67,7 +86,7 @@
     --highlight-foreground: 224 71.4% 4.1%;
 
     --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9--;
     --ring: 216 12.2% 83.9%;
   }
 }
@@ -76,16 +95,36 @@
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
+    font-family: 'Jost-Regular', ui-sans-serif, system-ui, sans-serif;
   }
+  
+  /* Headings use the custom heading font */
   h1,
   h2,
-  h3,
+  h3 {
+    font-family: 'Junicode-CondMedium', ui-serif, Georgia, serif;
+  }
+  
   h4,
   h5,
   h6 {
-    @apply font-serif;
+    font-family: 'Junicode-CondMedium', ui-serif, Georgia, serif;
+  }
+  
+  /* Paragraphs and other text elements use body font */
+  p,
+  span,
+  div,
+  li,
+  a,
+  button,
+  input,
+  textarea,
+  label {
+    font-family: 'Jost-Regular', ui-sans-serif, system-ui, sans-serif;
   }
 }
 
