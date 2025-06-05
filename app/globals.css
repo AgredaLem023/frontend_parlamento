@@ -98,20 +98,20 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: 'Jost-Regular', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Junicode-CondMedium', ui-sans-serif, system-ui, sans-serif;
   }
   
   /* Headings use the custom heading font */
   h1,
   h2,
   h3 {
-    font-family: 'Junicode-CondMedium', ui-serif, Georgia, serif;
+    font-family: 'Jost-Regular', ui-serif, Georgia, serif;
   }
   
   h4,
   h5,
   h6 {
-    font-family: 'Junicode-CondMedium', ui-serif, Georgia, serif;
+    font-family: 'Jost-Regular', ui-serif, Georgia, serif;
   }
   
   /* Paragraphs and other text elements use body font */
@@ -124,7 +124,7 @@
   input,
   textarea,
   label {
-    font-family: 'Jost-Regular', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Junicode-CondMedium', ui-sans-serif, system-ui, sans-serif;
   }
 }
 
