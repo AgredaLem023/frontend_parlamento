@@ -111,7 +111,7 @@ export default function MenuPage() {
       {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center">
         <div className="absolute inset-0 z-0" ref={heroBackgroundRef}>
-          <Image src="/menu_hero.png" alt="El Parlamento Menu" fill className="object-cover brightness-75" priority />
+          <Image src="/menu_hero.webp" alt="El Parlamento Menu" fill className="object-cover brightness-75" priority />
         </div>
         <div className="container-custom relative z-10 text-white">
           <h1 ref={heroTitleRef} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Nuestro Menú</h1>
