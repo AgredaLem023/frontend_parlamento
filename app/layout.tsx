@@ -51,7 +51,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${sans.variable} ${serif.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange forcedTheme="light">
           <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />

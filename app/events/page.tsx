@@ -30,6 +30,26 @@ const categoryInfo = {
   exhibition: { icon: <Users className="h-5 w-5" />, color: "bg-muted-teal text-white" },
 }
 
+function getImageUrl(imageUrl: string | undefined, baseUrl: string): string {
+  // Return placeholder if no image URL
+  if (!imageUrl || imageUrl.trim() === '') {
+    return "/placeholder.svg";
+  }
+  
+  // If it's already a full URL (starts with http:// or https://), return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  
+  // If it starts with /, it's a relative path, combine with baseUrl
+  if (imageUrl.startsWith('/')) {
+    return `${baseUrl}${imageUrl}`;
+  }
+  
+  // Otherwise, add / and combine with baseUrl
+  return `${baseUrl}/${imageUrl}`;
+}
+
 async function getEvents(): Promise<Event[]> {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   try {
@@ -179,15 +199,15 @@ export default function EventsPage() {
                 <Card key={event.id} className="overflow-hidden border-none shadow-md h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:scale-[1.05] hover:-translate-y-2 group">
                   <div className="relative h-48 overflow-hidden">
                     <Image 
-                      src={event.image ? `${baseUrl}${event.image}` : "/placeholder.svg"} 
+                      src={getImageUrl(event.image, baseUrl)} 
                       alt={event.title} 
                       fill 
                       className="object-cover transition-transform duration-500 group-hover:scale-110" 
                     />
                     <div
-                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium ${categoryInfo[event.category as keyof typeof categoryInfo].color}`}
+                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium ${categoryInfo[event.category as keyof typeof categoryInfo]?.color || "bg-gray-500 text-white"}`}
                     >
-                      {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                      {event.category?.charAt(0).toUpperCase() + event.category?.slice(1) || "Event"}
                     </div>
                   </div>
                   <CardContent className="p-6 flex-grow">
