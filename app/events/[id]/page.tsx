@@ -7,6 +7,51 @@ import EventRegistrationForm from "@/components/event-registration-form"
 import { format } from "date-fns"
 import { es } from "date-fns/locale"
 
+function extractGoogleDriveFileId(url: string): string | null {
+  // Extract file ID from various Google Drive URL formats
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /id=([a-zA-Z0-9_-]+)/,
+    /\/uc\?.*id=([a-zA-Z0-9_-]+)/
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
+function getImageUrl(imageUrl: string | undefined, baseUrl: string): string {
+  // Return placeholder if no image URL
+  if (!imageUrl || imageUrl.trim() === '') {
+    return "/placeholder.svg";
+  }
+  
+  // Check if it's a Google Drive URL and use proxy
+  if (imageUrl.includes('drive.google.com')) {
+    const fileId = extractGoogleDriveFileId(imageUrl);
+    if (fileId) {
+      return `${baseUrl}/api/image/${fileId}`;
+    }
+  }
+  
+  // If it's already a full URL (starts with http:// or https://), return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  
+  // If it starts with /, it's a relative path, combine with baseUrl
+  if (imageUrl.startsWith('/')) {
+    return `${baseUrl}${imageUrl}`;
+  }
+  
+  // Otherwise, add / and combine with baseUrl
+  return `${baseUrl}/${imageUrl}`;
+}
+
 // Event type
 type Event = {
   id: string
@@ -44,7 +89,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
       <section className="relative h-[50vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src={event.image || "/placeholder.svg"}
+            src={getImageUrl(event.image, baseUrl)}
             alt={event.title}
             fill
             className="object-cover brightness-75"
@@ -149,7 +194,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
                 <div key={relatedEvent.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="relative h-48">
                     <Image
-                      src={relatedEvent.image || "/placeholder.svg"}
+                      src={getImageUrl(relatedEvent.image, baseUrl)}
                       alt={relatedEvent.title}
                       fill
                       className="object-cover"

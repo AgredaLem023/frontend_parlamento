@@ -30,10 +30,35 @@ const categoryInfo = {
   exhibition: { icon: <Users className="h-5 w-5" />, color: "bg-muted-teal text-white" },
 }
 
+function extractGoogleDriveFileId(url: string): string | null {
+  // Extract file ID from various Google Drive URL formats
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /id=([a-zA-Z0-9_-]+)/,
+    /\/uc\?.*id=([a-zA-Z0-9_-]+)/
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
 function getImageUrl(imageUrl: string | undefined, baseUrl: string): string {
   // Return placeholder if no image URL
   if (!imageUrl || imageUrl.trim() === '') {
     return "/placeholder.svg";
+  }
+  
+  // Check if it's a Google Drive URL and use proxy
+  if (imageUrl.includes('drive.google.com')) {
+    const fileId = extractGoogleDriveFileId(imageUrl);
+    if (fileId) {
+      return `${baseUrl}/api/image/${fileId}`;
+    }
   }
   
   // If it's already a full URL (starts with http:// or https://), return as is
