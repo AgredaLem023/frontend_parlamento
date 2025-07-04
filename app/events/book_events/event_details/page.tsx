@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
+import { es } from "date-fns/locale"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -31,6 +32,9 @@ const formSchema = z.object({
   contactEmail: z.string().email({
     message: "Por favor, ingresa una dirección de correo electrónico válida.",
   }),
+  phoneNumber: z.string().min(8, {
+    message: "El número de teléfono debe tener al menos 8 dígitos.",
+  }),
 })
 
 export default function EventDetailsPage() {
@@ -49,6 +53,7 @@ export default function EventDetailsPage() {
       attendees: "",
       organizer: "",
       contactEmail: "",
+      phoneNumber: "",
     },
   })
 
@@ -145,7 +150,7 @@ export default function EventDetailsPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="flex items-center">
                     <CalendarIcon className="mr-2 h-4 w-4 text-[#B2042E]" />
-                    <span>{format(date, "EEEE, MMMM d, yyyy")}</span>
+                    <span>{format(date, "EEEE, d 'de' MMMM 'de' yyyy", { locale: es })}</span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="mr-2 h-4 w-4 text-[#B2042E]" />
@@ -244,27 +249,55 @@ export default function EventDetailsPage() {
                   />
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="contactEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#B2042E] font-medium">Correo Electrónico de Contacto</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="your@email.com"
-                          {...field}
-                          className="border-[#DBE0E3] focus-visible:ring-[#B2042E]"
-                        />
-                      </FormControl>
-                      <FormDescription className="text-gray-500">
-                        Los detalles de confirmación se enviarán a este correo.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <FormField
+                    control={form.control}
+                    name="contactEmail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#B2042E] font-medium">Correo Electrónico de Contacto</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="your@email.com"
+                            {...field}
+                            className="border-[#DBE0E3] focus-visible:ring-[#B2042E]"
+                          />
+                        </FormControl>
+                        <FormDescription className="text-gray-500">
+                          Los detalles de confirmación se enviarán a este correo.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#B2042E] font-medium">Numero del Organizador</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="tel"
+                            placeholder="73258901"
+                            {...field}
+                            className="border-[#DBE0E3] focus-visible:ring-[#B2042E]"
+                            onChange={(e) => {
+                              const value = e.target.value.replace(/\D/g, '')
+                              field.onChange(value)
+                            }}
+                            maxLength={15}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                
 
                 <div className="flex justify-between pt-4">
                   <Button

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { CalendarIcon, Clock, ArrowRight, ArrowLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
+import { es } from "date-fns/locale"
 
 export default function DateTimePage() {
   const [date, setDate] = useState<Date | undefined>(undefined)
@@ -76,7 +77,7 @@ export default function DateTimePage() {
                 {date && (
                   <div className="flex items-center text-sm text-[#B2042E] mt-2 bg-[#DBE0E3] p-3 rounded-lg">
                     <CalendarIcon className="mr-2 h-5 w-5" />
-                    <span className="font-medium">Seleccionado: {format(date, "EEEE, d 'de' MMMM 'de' yyyy")}</span>
+                    <span className="font-medium">Seleccionado: {format(date, "EEEE, d 'de' MMMM 'de' yyyy", { locale: es })}</span>
                   </div>
                 )}
               </div>

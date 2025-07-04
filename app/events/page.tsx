@@ -184,13 +184,14 @@ export default function EventsPage() {
           <div className="container-custom relative z-10">
             <div className="max-w-2xl">
               <h2 ref={heroTitleRef} className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6">
-                Reserva tu evento en El Parlamento
+                Reserva tu evento en <br />
+                El Parlamento
               </h2>
               <p ref={heroDescriptionRef} className="text-lg mb-6">
                 Nuestro espacio cultural está disponible para eventos privados, reuniones, talleres y más. Ofrecemos catering, equipo audiovisual y un equipo dedicado para que tu evento sea un éxito.
               </p>
               <div ref={heroButtonRef}>
-                <Button asChild className="bg-primary-ruby hover:bg-primary-ruby/90 transition-transform duration-300 hover:scale-105">
+                <Button asChild className="bg-primary-ruby hover:bg-primary-ruby/90 transition-transform duration-300 hover:scale-105 text-xl px-12 py-6">
                   <Link href="/events/book_events">Solicita tu reserva</Link>
                 </Button>
               </div>

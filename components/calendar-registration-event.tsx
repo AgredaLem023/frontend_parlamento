@@ -16,6 +16,7 @@ import {
   startOfMonth,
   subMonths,
 } from "date-fns"
+import { es } from "date-fns/locale"
 
 interface CustomCalendarProps {
   selected?: Date
@@ -106,7 +107,7 @@ export function CustomCalendar({
         >
           <ChevronLeft size={20} />
         </button>
-        <h2 className="text-xl font-bold">{format(currentMonth, "MMMM yyyy").replace(/^\w/, (c) => c.toUpperCase())}</h2>
+        <h2 className="text-xl font-bold">{format(currentMonth, "MMMM yyyy", { locale: es }).replace(/^\w/, (c) => c.toUpperCase())}</h2>
         <button
           onClick={handleNextMonth}
           className="p-2 rounded-full hover:bg-[#8c0325] transition-colors"
