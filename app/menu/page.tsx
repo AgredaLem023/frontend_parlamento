@@ -30,6 +30,51 @@ type MenuData = {
 };
 
 
+function extractGoogleDriveFileId(url: string): string | null {
+  // Extract file ID from various Google Drive URL formats
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /id=([a-zA-Z0-9_-]+)/,
+    /\/uc\?.*id=([a-zA-Z0-9_-]+)/
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
+function getImageUrl(imageUrl: string | undefined, baseUrl: string): string {
+  // Return placeholder if no image URL
+  if (!imageUrl || imageUrl.trim() === '') {
+    return "/placeholder.svg";
+  }
+  
+  // Check if it's a Google Drive URL and use proxy
+  if (imageUrl.includes('drive.google.com')) {
+    const fileId = extractGoogleDriveFileId(imageUrl);
+    if (fileId) {
+      return `${baseUrl}/api/image/${fileId}`;
+    }
+  }
+  
+  // If it's already a full URL (starts with http:// or https://), return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  
+  // If it starts with /, it's a relative path, combine with baseUrl
+  if (imageUrl.startsWith('/')) {
+    return `${baseUrl}${imageUrl}`;
+  }
+  
+  // Otherwise, add / and combine with baseUrl
+  return `${baseUrl}/${imageUrl}`;
+}
+
 async function getMenuData(): Promise<MenuData> {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   try {
@@ -150,7 +195,7 @@ export default function MenuPage() {
                         <div className="grid grid-cols-1 md:grid-cols-3">
                           <div className="relative h-[200px] md:h-full overflow-hidden">
                           <Image
-                            src={item.image ? `${baseUrl}${item.image}` : "/placeholder.svg"}
+                            src={getImageUrl(item.image, baseUrl)}
                             alt={item.name}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-110"
