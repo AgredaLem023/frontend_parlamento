@@ -1,7 +1,36 @@
 {
-  "name": "my-v0-project",
+  "name": "parlamento-frontend",
   "version": "0.1.0",
   "private": true,
+  "description": "Frontend application for El Parlamento restaurant/café management system",
+  "author": {
+    "name": "Sergio Agreda",
+    "email": "sergioagreda21@outlook.com",
+    "url": "https://github.com/AgredaLem023"
+  },
+  "contributors": [
+    {
+      "name": "Sergio Agreda",
+      "email": "sergioagreda21@outlook.com",
+      "url": "https://github.com/AgredaLem023"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AgredaLem023/frontend_parlamento.git"
+  },
+  "homepage": "https://github.com/AgredaLem023/frontend_parlamento#readme",
+  "bugs": {
+    "url": "https://github.com/AgredaLem023/frontend_parlamento/issues"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "restaurant",
+    "frontend",
+    "parlamento"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

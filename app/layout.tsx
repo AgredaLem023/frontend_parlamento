@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2025 Sergio Agreda
+ * 
+ * This code is proprietary and confidential.
+ * All rights reserved.
+ * 
+ * Author: Sergio Agreda <sergioagreda21@outlook.com>
+ * Created: May 2025
+ */
+
 import type React from "react"
 import type { Metadata } from "next"
 import { DM_Sans as Sans } from "next/font/google"

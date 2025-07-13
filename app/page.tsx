@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2025 Sergio Agreda
+ * 
+ * This code is proprietary and confidential.
+ * All rights reserved.
+ * 
+ * Author: Sergio Agreda <sergioagreda21@outlook.com>
+ * Created: May 2025
+ */
+
 "use client"
 import Image from "next/image"
 import Link from "next/link"
